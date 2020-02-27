@@ -1,4 +1,3 @@
-import sys
 import arcpy
 import pandas as pd
 
@@ -46,7 +45,7 @@ def main(workspace, dem, lu, railroad, out_file):
     pixel_count('dem_reclass', 'Value', 'lu_by_elev')
     pixel_count('railroad_buffer', 'OBJECTID', 'lu_by_rrdist')
 
-    # read the land use pixel count by elevation into a pandas datafram
+    # read the land use pixel count by elevation into a pandas dataframe
     # and reformat it
     elev_df = table_to_df('lu_by_elev')
     elev_df = elev_df.rename(columns={'LABEL': 'Land Use',
@@ -108,7 +107,7 @@ def main(workspace, dem, lu, railroad, out_file):
     df = pixel_count_df.join(by_rows_df, on='Land Use')
     df = df.join(by_columns_df, on='Land Use')
 
-    # write the output to seperate worksheets in a single Excel workbook
+    # write the output to separate worksheets in a single Excel workbook
     with pd.ExcelWriter(out_file) as writer:
         sheets = ['elev_by_rows', 'elev_by_columns', 'rr_by_rows', 'rr_by_columns']
     
